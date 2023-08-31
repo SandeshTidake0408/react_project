@@ -1,7 +1,7 @@
 export const Main = () => {
     return (
         <>
-            <div>Home</div>
+            <h2>Home Page</h2>
         </>
     );
 };
