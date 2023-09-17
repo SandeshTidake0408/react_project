@@ -6,7 +6,7 @@ export const Login = () => {
     const navigate = useNavigate();
     const signIn = async () => {
         const result = await signInWithPopup(auth, provider);
-        // console.log(result);
+        console.log(result);
         navigate("/");
     };
     return (
