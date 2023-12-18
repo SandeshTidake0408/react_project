@@ -1,8 +1,8 @@
-import React from "react";
-// import { motion } from "framer-motion";
+import React, { useState } from "react";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 
 const DeleteZone = ({ setData }) => {
+    const [hover, setHover] = useState(false);
     const handelDrop = (e) => {
         const cardID = e.dataTransfer.getData("cardID");
         setData((prevData) => {
@@ -12,6 +12,7 @@ const DeleteZone = ({ setData }) => {
 
             // Update localStorage with the latest data
             localStorage.setItem("Localdata", JSON.stringify(updatedData));
+            setHover(false);
 
             return updatedData;
         });
@@ -19,13 +20,18 @@ const DeleteZone = ({ setData }) => {
 
     const handelDragOver = (e) => {
         e.preventDefault();
-        console.log("hiiii i am apply...");
+        setHover(true);
+        // console.log("hiiii i am apply...");
     };
 
     return (
         <>
             <div
-                className="addButton cursor-pointer absolute top-0 right-0 mr-20 mt-20 bg-zinc-200 rounded-full p-2 z-[5]"
+                className={
+                    hover
+                        ? "addButton cursor-pointer absolute top-0 right-0 mr-20 mt-20 bg-zinc-200 rounded-full p-5 z-[5]"
+                        : "addButton cursor-pointer absolute top-0 right-0 mr-20 mt-20 bg-zinc-200 rounded-full p-2 z-[5] "
+                }
                 onDrop={handelDrop}
                 onDragOver={handelDragOver}
             >
