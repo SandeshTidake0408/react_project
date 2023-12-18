@@ -55,7 +55,7 @@ function Fg() {
 
     useEffect(() => {
         const getData = localStorage.getItem("Localdata");
-        console.log("getData from localStorage:", getData);
+        // console.log("getData from localStorage:", getData);
         if (getData) {
             const parsedData = JSON.parse(getData);
             setData(parsedData);
@@ -81,16 +81,14 @@ function Fg() {
                         );
                     })}
             </div>
-            {/* //add note button */}
             <div
-                className="addButton cursor-pointer absolute bottom-0 right-0 mr-5 mb-5 bg-zinc-200 rounded-full p-2 z-[5]"
+                className="addButton cursor-pointer absolute bottom-0 right-0 mr-[74px] mb-5 bg-zinc-200 rounded-full p-2 z-[5]"
                 onClick={() => {
                     setAdd(!add);
                 }}
             >
                 <IoAdd color="blue" size="2em" />
             </div>
-            {/* //conditional redering of add note button */}
             {add && (
                 <div className="z-[8] p-5 absolute top-20 right-5 bg-zinc-200">
                     <Form
@@ -103,31 +101,9 @@ function Fg() {
                     />
                 </div>
             )}
-            {Array.isArray(data) && <DeleteZone />}
+            {Array.isArray(data) && <DeleteZone setData={setData} />}
         </>
     );
 }
 
 export default Fg;
-
-const CardList = ({ data }) => {
-    const handleDelete = (cardId) => {
-        const updatedCards = data.filter((card) => card.id !== cardId);
-        setData(updatedCards);
-    };
-
-    return (
-        <div>
-            {data.map((card) => (
-                <Cards
-                    data={data}
-                    reference={reference}
-                    onDelete={() => handleDelete(card.id)}
-                />
-            ))}
-            <DeleteZone />
-        </div>
-    );
-};
-
-export { CardList };

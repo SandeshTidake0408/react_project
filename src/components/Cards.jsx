@@ -4,24 +4,14 @@ import { HiOutlineDownload } from "react-icons/hi";
 import { IoClose } from "react-icons/io5";
 import { LuFileEdit } from "react-icons/lu";
 import Form from "./Form";
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
 
-function Cards({
-    data,
-    reference,
-    setAddFunction,
-    setIsUpdating,
-    setSelectedNote,
-}) {
+function Cards({ data, setAddFunction, setIsUpdating, setSelectedNote }) {
     const [download, setDownload] = useState(false);
 
-    const handleDragEnd = (event, info) => {
-        const cardWidth = 60; // You may need to adjust this based on your card width
-        const deleteThreshold = window.innerWidth - cardWidth;
-
-        if (info.point.x > deleteThreshold) {
-            onDelete(data.id);
-        }
+    const handleDrag = (e, id) => {
+        e.dataTransfer.setData("cardID", id);
+        // console.log("cardID ", id);
     };
     const onEdit = () => {
         setIsUpdating(true);
@@ -31,11 +21,9 @@ function Cards({
     };
 
     return (
-        <motion.div
-            drag
-            dragConstraints={reference}
-            whileDrag={{ scale: 1.08 }}
-            onDragEnd={handleDragEnd}
+        <div
+            draggable
+            onDragStart={(e) => handleDrag(e, data.id)}
             className="relative w-60 h-[300px] rounded-[20px] bg-zinc-200/95 p-5 overflow-hidden"
         >
             <span className="flex justify-between">
@@ -76,7 +64,7 @@ function Cards({
                     </div>
                 ) : null}
             </div>
-        </motion.div>
+        </div>
     );
 }
 

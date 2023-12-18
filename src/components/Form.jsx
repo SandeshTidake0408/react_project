@@ -20,12 +20,6 @@ function Form({
         },
     });
 
-    // const handelChange = (e) => {
-    //     const { name, value } = e.target;
-    //     const n = data.length;
-
-    //     setNote((pre) => ({ ...pre, id: n + 1, [name]: value }));
-    // };
     useEffect(() => {
         if (isUpdating && selectedNote) {
             setNote(selectedNote);
@@ -65,21 +59,6 @@ function Form({
                 className=" p-1"
             />
 
-            {/* <button
-                    className="bg-green-500 mt-5 py-2 px-8 font-semibold text-zinc-100"
-                    onClick={() => {
-                        setAddFunction(!AddFunctionState);
-                        setData((prevData) => [...prevData, note]);
-
-                        localStorage.removeItem("Localdata");
-                        localStorage.setItem(
-                            "Localdata",
-                            JSON.stringify([...data, note])
-                        );
-                    }}
-                >
-                    Add Note
-                </button> */}
             <button
                 className={
                     isUpdating
@@ -92,16 +71,27 @@ function Form({
                             const updatedData = prevData.map((item) =>
                                 item.id === selectedNote.id ? note : item
                             );
+
                             // Update localStorage with the latest data
                             localStorage.setItem(
                                 "Localdata",
                                 JSON.stringify(updatedData)
                             );
+
                             return updatedData;
                         });
                     } else {
-                        // Add a new note
-                        setData((prevData) => [...prevData, note]);
+                        setData((prevData) => {
+                            const newData = [...prevData, note];
+
+                            // Update localStorage with the latest data
+                            localStorage.setItem(
+                                "Localdata",
+                                JSON.stringify(newData)
+                            );
+
+                            return newData;
+                        });
                     }
 
                     // Reset the form fields
@@ -116,13 +106,7 @@ function Form({
                             tagColor: "",
                         },
                     });
-
                     setAddFunction(!AddFunctionState);
-                    // localStorage.removeItem("Localdata");
-                    localStorage.setItem(
-                        "Localdata",
-                        JSON.stringify(...data, note)
-                    );
                 }}
             >
                 {isUpdating ? "Update Note" : "Add Note"}
